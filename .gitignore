@@ -1,3 +1,4 @@
 node_modules/
 src/built/
 .vscode/
+npm-debug.log

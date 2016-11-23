@@ -27,7 +27,7 @@ export default (<PluginDescription>{
         "settings": "^1.0.0"
     },
     builtinDependencies: {
-        "rcp-fe-lol-champ-select": "~1.0.471"
+        "rcp-fe-lol-champ-select": "~1.0.486-hotfix01"
     },
     setup() {
         // Register settings view.

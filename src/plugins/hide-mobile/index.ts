@@ -11,7 +11,7 @@ export default (<PluginDescription>{
     version: "1.0.0",
     description: "Adds a new 'Hide Mobile' option to hide friends that are on the LoL Friends app, but not online.",
     builtinDependencies: {
-        "rcp-fe-lol-social": "~1.0.653-any"
+        "rcp-fe-lol-social": "~1.0.693-hotfix01"
     },
     setup() {
         let unregisterContent: () => void;
