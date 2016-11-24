@@ -6,6 +6,8 @@ deploy:
   provider: releases
   api_key:
     secure: Hc2t3IWB/oiMZwTsfjtxS1vCRPjWL6QetAakYLW2s80kVWOfnu68vCmhO60Il9ZLxzSotqnFTmKHALWmJ8ztObjFA6Sn9LMyCzPqZeDW45QN1wJza+pzMo/IVHLBzSmJj7uZ7l98q87zQfuBVVkm8G+Zpm2lL/KFqOf0nCvTfT3yNdn3YzsJkw6S2EqYNy/AhX1YnQv/YB3d7dN0ni2MasORZ2KDB5zBTcPzHNyGWbVCjesYb8orwtSgSg0yotAS1O2gheEgheZ1Qj7xMiykE/gLTA4gmXEl3/4SGiG1V1d2wkK6iGtHlmsbhjsxIMrrjtI281OGDJ6ct19viwcGF/Ot12epb50NfRuMKmnnBhBu/4mJjFpBw3rN2CEmaa0EeeXHDSHKL4mcBEsQAuwIOw7CPYAI2TKC41mkpHHwCOEqx6vsRUNGkIylg8iZmVIuX1DnuhGEC8gcx18iCzlkVQhMoGDMlxsM5o/E8sRHGytzYHDno+Nqfrpgj5BvA8uWbk1TgTDzXw2t+FrxDtGf/dG2GrC4vsd4oSXqW8AZ6yOAI+Bv5McbjCkjFUS8ZXnOFaQLwYXq0pht+TQdYXLnLsqtVVsjwBETUTJi7pZwMaiC8SPhANY22y/NYsjr0CgLfn5BXlvkNSdEGP8Z2pKEfpRgi/AFdmSN6XuyYTYkFE4=
+  skip_cleanup: true
   file: src/built/bundle.js
   on:
+    tags: true
     repo: ZombieWizzard/Ace
