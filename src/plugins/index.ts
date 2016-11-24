@@ -15,6 +15,7 @@ import ClassicCurrency from "./classic-currency";
 import FancySelect from "./fancy-select";
 import RecentlyPlayed from "./recently-played";
 import EasyQueueDodge from "./easy-queue-dodge";
+import ChampionProfile from "./champion-profile"
 
 export const PLUGINS: PluginDescription[] = [
     Settings,
@@ -28,7 +29,8 @@ export const PLUGINS: PluginDescription[] = [
     ClassicCurrency,
     FancySelect,
     RecentlyPlayed,
-    EasyQueueDodge
+    EasyQueueDodge,
+    ChampionProfile
 ];
 
 export default function register(ace: Ace) {
