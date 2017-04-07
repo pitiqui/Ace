@@ -17,7 +17,7 @@ export interface Group {
 
 export default (<PluginDescription>{
     name: "champion-groups",
-    version: "1.3.0",
+    version: "2.0.0",
     description: "Adds custom champion group filters for champion select.",
     media: [
         { image: "http://i.thijsmolendijk.nl/H6Oov.png" },
@@ -27,7 +27,7 @@ export default (<PluginDescription>{
         "settings": "^1.0.0"
     },
     builtinDependencies: {
-        "rcp-fe-lol-champ-select": "~1.0.486-hotfix01"
+        "rcp-fe-lol-champ-select": "~1.0.736-hotfix02"
     },
     setup() {
         // Register settings view.

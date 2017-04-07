@@ -6,7 +6,7 @@ type Matcher = RegExp | string;
 type Callback = (req: XMLHttpRequest, url: string, ...args: any[]) => any;
 
 const OPTIONS = Symbol("ace-xmlhttprequest-options");
-const HOOKS: { matcher: Matcher, fun: Callback }[] = [];
+const HOOKS: { matcher: Matcher, fun: Callback, sendFun: Callback | undefined }[] = [];
 
 export const NAME = "http";
 
@@ -16,10 +16,11 @@ export const NAME = "http";
  * 
  * @param fun A function taking the XMLHttpRequest and optional extra onreadystatechange arguments.
  * @param matcher Either a regex or a string to match the url to.
+ * @param [sendFun] A function taking the Send method of the XMLHttpRequest to modify arguments.
  * @returns unregister A function that can be called to unregister the hook.
  */
-export function register(fun: Callback, matcher: Matcher) {
-    const obj = { matcher, fun };
+export function register(fun: Callback, matcher: Matcher, sendFun?: Callback) {
+    const obj = { matcher, fun, sendFun };
     HOOKS.push(obj);
     return () => {
         HOOKS.splice(HOOKS.indexOf(obj), 1);
@@ -54,6 +55,11 @@ export function initialize() {
             HOOKS.filter(h => typeof h.matcher === "string" ? h.matcher === url : url.match(h.matcher)).forEach(h => h.fun(this, url, ...args));
             return original(...args);
         });
+
+        if (!this[OPTIONS]) throw "XMLHttpRequest has no OPTIONS symbol. Something is wrong with the hook.";
+
+        const url = this[OPTIONS].url;
+        HOOKS.filter(h => typeof h.matcher === "string" ? h.matcher === url : url.match(h.matcher) && h.sendFun).forEach(h => args = h.sendFun!(this, url, ...args) || args)
 
         return original(...args);
     });

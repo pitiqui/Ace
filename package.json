@@ -10,7 +10,9 @@
     "docgen": "ts-node util/docgen.ts",
     "docgen:commit": "npm run docgen && git add PLUGINS.md"
   },
-  "pre-commit": ["docgen:commit"],
+  "pre-commit": [
+    "docgen:commit"
+  ],
   "author": "molenzwiebel",
   "license": "MIT",
   "devDependencies": {

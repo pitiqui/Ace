@@ -1,24 +1,24 @@
-<div id="groupHeader" class="social-arrow-hit" if="{{data.friendGroups.length > 1}}" index="{{index}}" draggable-element="{{false}}" on-contextmenu="{{showContextMenu($event)}}" on-click="{{toggleOpen()}}"
-    on-mousedown="{{onMouseDown($event)}}" error="{{errorMessage}}">
-    <div id="arrow-container" class-hide="{{editingGroupName}}">
-        <lol-social-arrow-toggle open?="{{open}}" id="arrow"></lol-social-arrow-toggle>
+<div class="group-header" if="{{data.friendGroups.length > 1 || hasAttribute('recent')}}" index="{{index}}" draggable-element="{{!editingGroupName && !group.isMetaGroup}}" on-dragstart="{{onDragStart($event)}}" on-contextmenu="{{showContextMenu($event)}}" on-click="{{data.friendGroups.length > 1 && toggleOpen()}}" on-mousedown="{{onMouseDown($event)}}" error="{{errorMessage}}" class-hidden="{{data.searchText}}">
+    <div class="arrow-container" if="{{data.friendGroups.length > 1}}" class-hide="{{editingGroupName}}" class-use-animation="{{data.uxSettingsProfile.largeAreaAnimationsEnabled}}">
+        <lol-social-arrow-toggle open?="{{(hasAttribute('recent') && toggled) || group.isOpen}}" class="arrow"></lol-social-arrow-toggle>
     </div>
-    <lol-social-roster-group-name id="groupName" group="{{ hasAttribute('recent') ? ({ name: group.name }) : group }}" on-editstart="{{toggleEditing(true)}}" on-editend="{{toggleEditing(false)}}"></lol-social-roster-group-name>
-    <span if="{{ hasAttribute('recent') }}" class="refresh-btn" on-click="{{ startLoad($event) }}"></span>
+    <lol-social-roster-group-name if="{{!hasAttribute('recent')}}" ref="groupName" class="group-name" group="{{group}}" on-editstart="{{toggleEditing(true)}}" on-editend="{{toggleEditing(false)}}"></lol-social-roster-group-name>
+    <lol-social-roster-group-name else recent ref="groupName" class="group-name" group="{{group}}" on-editstart="{{toggleEditing(true)}}" on-editend="{{toggleEditing(false)}}"></lol-social-roster-group-name>
+    <span if="{{hasAttribute('recent')}}" class="refresh-btn" on-click="{{startLoad($event)}}"></span>
 </div>
 
-<div id="drop-area" if="{{dropAvailable && !hasAttribute('recent')}}" animate=""></div>
+<div class="drop-area" if="{{dropAvailable}}" style="height:{{dropAreaHeight}}px">
+    <div class="drop-area-arrow" if="{{showDropArrow}}" animate="slide"></div>
+</div>
 
-<div id="members" show="{{ (open && !dropAvailable && !hasAttribute('group-drop')) || data.friendGroups.length === 1 }}" on-animatestart="{{animateStart()}}" on-animateend="{{animateEnd()}}" animate="slide">
-    <lol-social-roster-member if="{{ !hasAttribute('recent') }}" repeat="{{friend in data.friends | filter(friendFilter) | sort(friendSort)}}" member-id="{{friend.id}}" member="{{friend}}" animate="slide">
-    </lol-social-roster-member>
-    <div else-if="{{ hasAttribute('recent') && (loading || !startedInitialLoad) }}" class="loading-spinner">
+<div if="{{hasAttribute('recent') && this.toggled}}" class="members" ref="members" style="height:{{hasAttribute('recent') ? loading ? String(160) : String(recentPlayers.length * 30) : String(groupFriends.length * FRIEND_HEIGHT)}}px" animate="slide">
+    <div if="{{(loading || !startedInitialLoad)}}" class="loading-spinner">
         {{startLoad()}}
     </div>
-    <div else-if="{{ hasAttribute('recent') && loaded }}">
-        <div draggable-element="" class="recently-played-member" repeat="{{recent in recentPlayers}}" on-dragstart="{{onRecentDragStart($event, recent)}}" on-contextmenu="{{onRecentRightClick($event, recent)}}">
-            <img src="{{ recent.championIconUrl }}">
-            <span>{{ recent.summonerName }}</span>
+    <div class="members-inner" else-if="{{loaded}}">
+        <div draggable-element class="recently-played-member" repeat="{{recent in recentPlayers}}" on-click="{{onRecentClick($event, recent)}}" on-dragstart="{{onRecentDragStart($event, recent)}}" on-contextmenu="{{onRecentRightClick($event, recent)}}">
+            <img src="{{recent.championIconUrl}}">
+            <span>{{recent.summonerName}}</span>
         </div>
     </div>
 </div>

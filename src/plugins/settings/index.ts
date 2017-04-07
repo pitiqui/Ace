@@ -13,7 +13,7 @@ export default (<PluginDescription>{
     description: "Adds settings and plugin management for Ace plugins.",
     builtinDependencies: {
         "rcp-fe-app-controls": "~0.0.384",
-        "rcp-fe-lol-uikit": "~0.3.194"
+        "rcp-fe-lol-uikit": "~0.3.473-hotfix01",
     },
     setup() {
         const api = new API();
@@ -22,14 +22,18 @@ export default (<PluginDescription>{
             this.getBuiltinApi("rcp-fe-lol-uikit"),
             this.getBuiltinApi("rcp-fe-app-controls")
         ]).then(([uikit]) => {
-            const appControls = document.querySelector(".riotclient-app-controls")!;
-
             const button = document.createElement("div");
             button.className = "app-controls-button app-controls-ace-settings";
             button.setAttribute("action", "_getDialogHeader"); // dummy method to not throw an error
             button.onclick = presentSettings(uikit, this.ace, api);
 
-            appControls.insertBefore(button, appControls.firstChild);
+            setTimeout(() => {
+                do {
+                    var appControls = document.querySelector(".riotclient-app-controls");
+                } while (appControls === null)
+
+                appControls.insertBefore(button, appControls.querySelector(".app-controls-settings"))
+            }, 0);
         });
 
         return api.load().then(() => api);
@@ -45,7 +49,8 @@ const presentSettings = (uikit: any, ace: any, api: any) => () => {
 
     // Close chat if it is open, since it will be above our settings.
     const chatWindow: any | null = document.querySelector("body /deep/ lol-social-chat-window");
-    chatWindow && chatWindow.closeImmediately && chatWindow.closeImmediately();
+    const chatToggleButton: any | null = document.querySelector("body /deep/ lol-social-chat-toggle-button");
+    chatWindow && chatWindow.visible && chatToggleButton && chatToggleButton.toggleChatWindow && chatToggleButton.toggleChatWindow();
 
     const layerManager = document.getElementById("lol-uikit-layer-manager");
     document.body.insertBefore(parent, layerManager);

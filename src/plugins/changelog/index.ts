@@ -19,10 +19,10 @@ interface ChangelogSettings {
 
 export default (<PluginDescription>{
     name: "changelog",
-    version: "1.0.0",
+    version: "2.0.0",
     description: "Displays Ace changelogs and the initial welcome message.",
     builtinDependencies: {
-        "rcp-fe-lol-uikit": "~0.3.194"
+        "rcp-fe-lol-uikit": "~0.3.473-hotfix01"
     },
     dependencies: {
         "settings": "^1.0.0"
@@ -53,7 +53,7 @@ export default (<PluginDescription>{
                 settings.save(); 
 
                 // Fetch changelog.
-                simple_promise_fetch("https://api.github.com/repos/ace-lol/ace/releases").then(json => {
+                simple_promise_fetch("https://api.github.com/repos/zombiewizzard/ace/releases").then(json => {
                     const data: any[] = JSON.parse(json);
                     const release: { body: string } = data.filter(x => x.tag_name === window.ACE_VERSION)[0];
                     return release.body;

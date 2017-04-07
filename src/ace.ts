@@ -13,6 +13,7 @@ import * as HTTP_HOOK from "./hook-providers/http";
 import * as REGISTER_ELEMENT_HOOK from "./hook-providers/register-element";
 import * as TEMPLATE_CONTENT_HOOK from "./hook-providers/template-content";
 import * as EMBER_COMPONENT_HOOK from "./hook-providers/ember-component";
+import * as EMBER_SERVICE_HOOK from "./hook-providers/ember-service";
 
 // Mainly notification styles.
 import "./style";
@@ -59,11 +60,14 @@ export default class Ace {
             registerPlugins(this);
         } catch (e) {
             this.addNotification("error", "Error", `Unrecoverable error initializing Ace: '${e}'. Ace will disable itself.`);
+            console.error(e);
             this.dormant = true;
             return;
         }
 
         this.fetchBuiltinPluginInformation().then(() => this.fetchToggledPlugins()).then(() => {
+            (<any>window).$AcePending === undefined || (<any>window).$AcePending.forEach((p: any) => this.handleOnLoad(p));
+            delete (<any>window).$AcePending;
             if (this.dormant) return;
 
             this.hookManager = new HookManager(this);
@@ -71,6 +75,7 @@ export default class Ace {
             this.hookManager.registerHookProvider(REGISTER_ELEMENT_HOOK);
             this.hookManager.registerHookProvider(TEMPLATE_CONTENT_HOOK);
             this.hookManager.registerHookProvider(EMBER_COMPONENT_HOOK);
+            this.hookManager.registerHookProvider(EMBER_SERVICE_HOOK);
 
             this.resolvePluginDependencies();
             this.initializePlugins().then(() => {
@@ -86,6 +91,8 @@ export default class Ace {
 
             this.addNotification("error", "Ace Error", `Unrecoverable error initializing Ace: '${e}'. Ace will disable itself.`);
             this.dormant = true;
+            (<any>window).$AcePending === undefined || (<any>window).$AcePending.forEach((p: any) => this.handleOnLoad(p));
+            delete (<any>window).$AcePending;
             return;
         });
     }
@@ -187,7 +194,8 @@ export default class Ace {
     }
 
     /**
-     * This is called by the injected code whenever the script tag has loaded.
+     * This is called by the injected code whenever the script tag has loaded
+     * or by Ace if there were plugins loaded prior to Ace loading.
      * We then perform some dark magic to intercept the provider and api.
      */
     /*private*/ handleOnLoad(entry: { pluginName: string, document: Document, originalLoad: () => void }) {
@@ -234,44 +242,27 @@ export default class Ace {
                 return original(event);
             }
             
-            // Step 2: We pretend to be the plugin and ask for the provider.
-            // registrationHandler expects us to return a promise to the eventual
-            // plugin api, so we construct a promise that we resolve later.
-            event.registrationHandler(p => {
-                return new Promise(resolve => {
-                    // Step 3: We construct a fake riotPlugin.announce event that we
-                    // relay to the _actual_ plugin code. This way we get access to the
-                    // resulting api that the plugin exports.
-                    const fakeEvent = new Event("riotPlugin.announce") as AnnounceEvent;
-                    fakeEvent.errorHandler = event.errorHandler;
-                    fakeEvent.uiIsReady = event.uiIsReady;
-                    fakeEvent.registrationHandler = handler => {
-                        let result = handler(p);
-                        result = result && result.then ? result : Promise.resolve(result); // Convert to promise.
-
-                        result.then((api: any) => {
-                            plugin.isInitialized = true;
-                            plugin.api = api;
-                            plugin.provider = p;
-
-                            if (self.postinitHooks[plugin.info.fullName]) {
-                                self.postinitHooks[plugin.info.fullName].forEach(f => f(plugin));
-                            }
-
-                            // At this point we have the api, so we are ready to resolve
-                            // the promise that we delivered in step 2.
-                            resolve(api);
-                        });
-                    };
-
-                    if (self.preinitHooks[plugin.info.fullName]) {
-                        self.preinitHooks[plugin.info.fullName].forEach(f => f(plugin));
-                    }
-
-                    // Step 4: Relay this fake event to the original plugin code.
-                    original(fakeEvent);
+            const oldHandler: any = event.registrationHandler;
+            event.registrationHandler = function(handler) {
+                return oldHandler.call(this, (p: any) => {
+                    let result = handler(p);
+                    result = result && result.then ? result : Promise.resolve(result);
+                    return result.then((api: any) => {
+                        plugin.isInitialized = true;
+                        plugin.api = api;
+                        plugin.provider = p;
+                        if (self.postinitHooks[plugin.info.fullName]) {
+                            self.postinitHooks[plugin.info.fullName].forEach(f => f(plugin));
+                        }
+                        return Promise.resolve(api);
+                    });
                 });
-            });
+            };
+            (<any>event.registrationHandler).withAffinity = oldHandler.withAffinity;
+            if (self.preinitHooks[plugin.info.fullName]) {
+                self.preinitHooks[plugin.info.fullName].forEach(f => f(plugin));
+            }
+            original(event);
         });
 
         // This call here informs `rcp-fe-plugin-loader` that our plugin is ready to initialize.
@@ -420,7 +411,7 @@ export default class Ace {
 
         const el = tmp.children[0];        
         el.querySelector(".close")!.addEventListener("click", () => {
-            el.parentElement.removeChild(el);
+            el.parentElement!.removeChild(el);
         });
         this.notificationElement.appendChild(el);
     }

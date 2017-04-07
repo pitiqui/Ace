@@ -10,7 +10,7 @@ export default (<PluginDescription>{
     version: "0.1.0",
     description: "Allows you to edit runes in champion select.",
     builtinDependencies: {
-        "rcp-fe-lol-champ-select": "1.0.x",
+        "rcp-fe-lol-champ-select": "1.0.736-hotfix02",
         "rcp-fe-lol-runes": "0.0.x",
         "rcp-fe-lol-uikit": "*"
     },

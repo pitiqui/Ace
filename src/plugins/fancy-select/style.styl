@@ -12,16 +12,22 @@
     .champion-ring-shine-animation,
     .champion-ring-magic-animation-inner,
     .champion-ring-magic-animation-outer,
-    .champion-ring-spinner,
     .champion-icons,
-    .video-ring-spinner
+    .image-ring-spinner
         display none !important
 
     .player-details
-        margin-left -60px
+        margin-left -60px !important
     
     .summoner-position, .summoner-name
         color white
 
     .ban-icon
-        margin-left -48px
+        margin-left -48px !important
+        
+.ace-override-grid
+    .your-party .party
+        -webkit-mask-image radial-gradient(circle at calc(100% + 228.75px) calc(50% - 2.5px), transparent 0, transparent 318px, #000 318px, #000 100%) !important
+    
+    .enemy-party .party
+        -webkit-mask-image radial-gradient(circle at calc(-100% + 228.75px) calc(50% - 2.5px), transparent 0, transparent 318px, #000 318px, #000 100%) !important

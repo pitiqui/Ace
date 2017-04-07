@@ -1,13 +1,13 @@
 "use strict";
 
-export default function simple_fetch(url: string, cb: (contents: string) => void): Promise<string> {
-    return simple_promise_fetch(url).then(x => {
+export default function simple_fetch(url: string, cb: (contents: string) => void, method: string = "GET", body?: string | Object, content_type: string = "application/json"): Promise<string> {
+    return simple_promise_fetch(url, method, body, content_type).then(x => {
         cb(x);
         return x;
     });
 }
 
-export function simple_promise_fetch(url: string, method: string = "GET", body?: string): Promise<string> {
+export function simple_promise_fetch(url: string, method: string = "GET", body?: string | Object, content_type: string = "application/json"): Promise<string> {
     return new Promise<string>((resolve, reject) => {
         const req = new XMLHttpRequest();
         req.addEventListener('load', () => {
@@ -19,7 +19,7 @@ export function simple_promise_fetch(url: string, method: string = "GET", body?:
         });
         req.addEventListener('error', err => reject(err));
         req.open(method, url, true);
-        req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        req.send(body);
+        req.setRequestHeader('Content-Type', content_type);
+        req.send(typeof body === "string" ? body : JSON.stringify(body));
     });
 }

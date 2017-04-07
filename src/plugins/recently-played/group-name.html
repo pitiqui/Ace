@@ -1,0 +1,4 @@
+<span if="{{hasAttribute('recent')}}">{{label}}</span>
+<span else-if="{{group.isDefault}}">{{t('group_label_default')}} ({{getFriendCount()}})</span>
+<span else-if="{{group.isMetaGroup}}">{{t('group_label_' + group.name.toLowerCase())}} ({{getFriendCount()}})</span>
+<span else>{{label}} ({{getFriendCount()}})</span>

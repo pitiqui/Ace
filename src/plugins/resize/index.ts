@@ -9,7 +9,7 @@ export default (<PluginDescription>{
     version: "1.0.0",
     description: "Allows you to resize the client, as long as it keeps its standard aspect ratio.",
     builtinDependencies: {
-        "rcp-fe-lol-uikit": "~0.3.194"
+        "rcp-fe-lol-uikit": "~0.3.473-hotfix01"
     },
     setup() {
         // UIKit layer manager puts something in document.body. We want to insert _after_ that, so that we are on top.

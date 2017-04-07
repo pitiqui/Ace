@@ -1,10 +1,10 @@
 "use strict";
 
 import { wrap_method } from "../util";
+import { wrap_ember } from "./util/ember";
 import Ace from "../ace";
 
 export const NAME = "ember-component";
-const HOOKED = Symbol("ace-ember-component-hooked");
 
 type Callback = (Ember: any, args: any[]) => any;
 const HOOKS: { matcher: string, fun: Callback }[] = [];
@@ -28,30 +28,14 @@ export function register(fun: Callback, matcher: string) {
 }
 
 /**
- * Initializes this hook provider by wrapping the various instances of `Ember.Component.extend`.
+ * Exports the ember wrapper from util/ember.ts.
  */
+
 export function initialize(ace: Ace) {
-    ace.getBuiltinApi("rcp-fe-ember-libs").then(api => {
-        // We need to do a little dance here to make sure we hook before the first invocation.
-        // Since rcp-fe-ember-libs is async, we cannot guarantee that we are the first to receive
-        // the Ember instance if we simply hook the result of api.getEmber. Instead, we need to
-        // make sure we modify the Ember instance before we return it to the plugin requesting it.
-        wrap_method(api, "getEmber", function(original, args) {
-            const res: Promise<any> = original(...args);
-
-            return res.then(Ember => {
-                // No point in hooking twice.
-                if (Ember[HOOKED]) return Ember;
-
-                Ember[HOOKED] = true;
-                hookEmber(Ember);
-                return Ember;
-            });
-        });
-    });
+    wrap_ember(ace);
 }
 
-function hookEmber(Ember: any) {
+export function hookEmber(Ember: any) {
     wrap_method(Ember.Component, "extend", function(original, args) {
         // Find the classNames component, in case there were mixins present.
         const name = (<any[]>args).filter(x => (typeof x === "object") && x.classNames && Array.isArray(x.classNames)).map(x => x.classNames.join(" "));

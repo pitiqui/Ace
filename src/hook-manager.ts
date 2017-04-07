@@ -67,10 +67,6 @@ export default class HookManager {
     }
 
     private areParamsEqual(a: any[], b: any[]): boolean {
-        console.dir(a);
-        console.dir(b);
-        if (a.length !== b.length) throw `HookProvider register call parameter length is not consistent. This should never happen.`;
-
         for (let i = 0; i < a.length; i++) {
             // TODO(molenzwiebel): This fails equality checks for regexes and other "complex" objects.
             if (typeof a[i] !== typeof b[i] || a[i] !== b[i]) return false;

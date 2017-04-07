@@ -29,7 +29,7 @@ export function register(fun: Callback) {
  * Initializes this hook provider by wrapping HTMLTemplateElement.content.
  */
 export function initialize() {
-    redefine<DocumentFragment>(HTMLTemplateElement.prototype, "content", function(original) {
+    redefine(HTMLTemplateElement.prototype, "content", function(original) {
         const result = original();
         CALLBACKS.forEach(cb => cb(result));
         return result;

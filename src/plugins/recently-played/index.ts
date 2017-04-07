@@ -6,28 +6,40 @@ import { simple_promise_fetch } from "../../util";
 
 import ROSTER_HTML = require("./roster.html");
 import GROUP_HTML = require("./group.html");
+import GROUP_NAME_HTML = require("./group-name.html");
 import "./style";
 
 export default (<PluginDescription>{
     name: "recently-played",
-    version: "1.0.0",
-    description: "Adds a recently played tab that allows you to see and invite anyone you recently played with.",
+    version: "2.0.0",
+    description: "Adds a recent summoners group in your friends list that allows you to view, invite and add anyone you recently played with.",
     disableByDefault: true,
     builtinDependencies: {
         "rcp-fe-lol-social": "~1.0.693-hotfix01"
     },
     setup() {
         let unregisterRoster = this.hook("template-content", (doc: DocumentFragment) => {
-            if (doc.querySelector("lol-uikit-scrollable#list")) {
-                (<HTMLElement>doc.querySelector("lol-uikit-scrollable#list .list-content:not(#no-friends):not(#no-online-friends)")).outerHTML = ROSTER_HTML;
+            if (doc.querySelector("lol-uikit-scrollable.list")) {
+                let div = document.createElement('div');
+                div.innerHTML = ROSTER_HTML;
+                if (div.firstChild) {
+                    (<HTMLElement>doc.querySelector("lol-uikit-scrollable.list .list-content:not(#no-friends):not(#no-online-friends)")).appendChild(div.firstChild);
+                }
                 unregisterRoster();
             }
         });
 
         let unregisterGroup = this.hook("template-content", (doc: DocumentFragment) => {
-            if (doc.querySelector("#group > #groupHeader")) {
-                (<HTMLElement>doc.querySelector("#group")).innerHTML = GROUP_HTML;
+            if (doc.querySelector(".group > .group-header")) {
+                (<HTMLElement>doc.querySelector(".group")).innerHTML = GROUP_HTML;
                 unregisterGroup();
+            }
+        });
+
+        let unregisterGroupName = this.hook("template-content", (doc: DocumentFragment) => {
+            if (doc.querySelector(".group-name-text > .group-label")) {
+                (<HTMLElement>doc.querySelector(".group-name-text > .group-label")).innerHTML = GROUP_NAME_HTML;
+                unregisterGroupName();
             }
         });
 
@@ -36,6 +48,15 @@ export default (<PluginDescription>{
 
             proto.loading = false;
             proto.startedInitialLoad = false;
+            proto.toggled = false;
+
+            proto.oldToggleOpen = proto.toggleOpen;
+            proto.toggleOpen = function() {
+                proto.oldToggleOpen.call(this);
+
+                this.toggled = !this.toggled;
+            }
+
             proto.startLoad = function(event?: MouseEvent) {
                 if (this.loading) return;
                 if (event) event.stopPropagation();
@@ -47,15 +68,17 @@ export default (<PluginDescription>{
                     this.loading = false;
                     this.loaded = true;
 
-                    this.recentPlayers = JSON.parse(json);
-                    this.recentPlayers.forEach((p: any) => {
-                        p.championIconUrl = "/lol-game-data/assets/v1/champion-icons/" + p.championId + ".png";
-                    });
-                    this.recentPlayers.sort((a: any, b: any) => {
+                    this.recentPlayers = JSON.parse(json).filter((p: any) => {
+                        // Remove players we are friends with or have blocked.
+                        return !this.data.friends.byId[p.summonerId] && !this.data.blockedPlayers.byId[p.summonerId]
+                    }).sort((a: any, b: any) => {
                         // Sort by newest first.
                         return new Date(b.gameCreationDate).getTime() - new Date(a.gameCreationDate).getTime();
                     });
-
+                    this.recentPlayers.forEach((p: any) => {
+                        // Add champion icon url to data player object.
+                        p.championIconUrl = "/lol-game-data/assets/v1/champion-icons/" + p.championId + ".png";
+                    });
                     this.queueRepaint();
                 });
 
@@ -64,12 +87,14 @@ export default (<PluginDescription>{
 
             proto.onRecentDragStart = function(event: DragEvent, member: any) {
                 const dataTransfer = event.dataTransfer;
+                this.sounds.drag.play();
                 
-                dataTransfer.setData("application/riot.roster-member+json", JSON.stringify({
+                // We don't want to set this as recently played members shouldn't be draggable to roster groups
+                /*dataTransfer.setData("application/riot.roster-member+json", JSON.stringify({
                     type: "roster-member",
                     id: member.summonerId,
                     name: member.summonerName
-                }));
+                }));*/
                 
                 dataTransfer.setData("application/riot.chat-user+json", JSON.stringify({
                     type: "chat-user",
@@ -84,6 +109,11 @@ export default (<PluginDescription>{
                 }));
             };
 
+            proto.onRecentClick = function(event: MouseEvent, member: any) {
+                this.activeMember = member;
+                this.viewRecentProfile();
+            }
+
             proto.onRecentRightClick = function(event: MouseEvent, member: any) {
                 // There must be a lobby, not in queue, you must be able to invite, the player cannot already be in the lobby.
                 const canInvite = this.data.lobby && !this.data.gameSearch && this.data.lobby.members.some((lobbyMember: any) => {
@@ -93,14 +123,18 @@ export default (<PluginDescription>{
                 });
 
                 const actions = [{
-                    action: "viewRecentProfile",
-                    target: this,
-                    label: "View Profile"
-                }, {
                     action: "inviteRecent",
                     target: this,
-                    label: "Invite to Game",
+                    label: this.t("context_menu_invite_to_game"),
                     disabled: !canInvite
+                }, {
+                    action: "viewRecentProfile",
+                    target: this,
+                    label: this.t("context_menu_view_profile")
+                }, {
+                    action: "addRecent",
+                    target: this,
+                    label: this.t("tooltip_new_friend")
                 }];
 
                 this.data.contextMenuManager.close();
@@ -139,6 +173,10 @@ export default (<PluginDescription>{
                     }
                 });
             };
+
+            proto.addRecent = function() {
+                simple_promise_fetch("/lol-chat/v1/friend-requests", "POST", JSON.stringify({name: this.activeMember.summonerName}), "application/json");
+            }
 
             unregisterElement();
         }, "lol-social-roster-group");

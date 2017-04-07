@@ -7,7 +7,7 @@
  * The provided functions have their `this` instance set to the current object.
  * Remember this when passing arrow functions, since they retain their this value.
  */
-export default function redefine<T>(container: any, name: string, getter: (original: () => T) => T, setter?: (v: T, original: (newValue: T) => void) => void) {
+export default function redefine<C, K extends keyof C, T extends C[K]>(container: C, name: K, getter: (original: () => T) => T, setter?: (v: T, original: (newValue: T) => void) => void) {
     const originalGetter = (
         Object.getOwnPropertyDescriptor(container, name)
         || Object.getOwnPropertyDescriptor(Object.getPrototypeOf(container), name)

@@ -64,7 +64,7 @@ export default function(Ember: Ember, championDetails: any, uikit: any) {
                 const el = this.$(".skin[data-skin-id='" + skin.id + "']");
                 
                 const RenderTooltip = () => {
-                    const tooltipText = skin.ownership.owned ? `Purchased on ${new Date(skin.ownership.rental.purchaseDate).toISOString().slice(0, 10)}` : "Not owned";
+                    const tooltipText = skin.ownership.owned ? `Acquired on ${new Date(skin.ownership.rental.purchaseDate).toISOString().slice(0, 10)}` : "Not owned";
 
                     const tooltipEl = document.createElement("lol-uikit-tooltip");
                     tooltipEl.className = "skin-tooltip " + (skin.ownership.owned ? "owned" : "unowned");

@@ -6,13 +6,9 @@ Ace features a large set of plugins that all either change or add features. Want
 
 Adds settings and plugin management for Ace plugins.
 
-## changelog v1.0.0 
+## changelog v2.0.0 
 
 Displays Ace changelogs and the initial welcome message.
-
-## hide-mobile v1.0.0 
-
-Adds a new 'Hide Mobile' option to hide friends that are on the LoL Friends app, but not online.
 
 ## no-shutdown-prompt v1.0.0 
 
@@ -26,17 +22,13 @@ Shows your owned skins in the `Collections` tab.
 
 Adds descriptions to your summoner icons.
 
-## resize v1.0.0 
-
-Allows you to resize the client, as long as it keeps its standard aspect ratio.
-
-## champion-groups v1.3.0 
+## champion-groups v2.0.0 
 
 Adds custom champion group filters for champion select.
 ![champion-groups media](http://i.thijsmolendijk.nl/H6Oov.png)
 ![champion-groups media](http://i.thijsmolendijk.nl/Pz7Lw.png)
 
-## classic-currency v1.0.0 (disabled by default)
+## classic-currency v2.0.0 (disabled by default)
 
 Replaces the RP and IP icons with their Legacy Client equivalents.
 
@@ -44,10 +36,26 @@ Replaces the RP and IP icons with their Legacy Client equivalents.
 
 Gives champion select a different, fancier current champion layout.
 
-## recently-played v1.0.0 (disabled by default)
+## recently-played v2.0.0 (disabled by default)
 
-Adds a recently played tab that allows you to see and invite anyone you recently played with.
+Adds a recent summoners group in your friends list that allows you to view, invite and add anyone you recently played with.
 
-## easy-queue-dodge v1.0.0 (disabled by default)
+## easy-queue-dodge v2.0.0 (disabled by default)
 
-Adds a button to champ select to dodge without closing the entire client.
+Adds a quit button to champ select to easily dodge (LP loss and leaving restrictions will still apply)
+
+## easy-queue-accept v2.0.0 (disabled by default)
+
+Allows you to press the enter key to accept queue ready check.
+
+## practice-tool-extra-bots v2.0.0 (disabled by default)
+
+Allows you to add extra bots to the pracitce tool lobby.
+
+## appear-mobile v2.0.0 
+
+Allows you to hide your status in the social options menu.
+
+## chat-commands v2.0.0 
+
+Adds chat commands to messaging, prefixed by forward-slash.

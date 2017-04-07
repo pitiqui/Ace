@@ -11,7 +11,7 @@ export default (<PluginDescription>{
     description: "Adds descriptions to your summoner icons.",
     builtinDependencies: {
         "rcp-fe-lol-summoner-icon-picker": "~0.0.26",
-        "rcp-fe-lol-uikit": "~0.3.194"
+        "rcp-fe-lol-uikit": "~0.3.473-hotfix01"
     },
     setup() {
         // Expand ranges.
@@ -38,25 +38,27 @@ const Mixin = (Ember: any, ace: Ace) => ({
     // We need to re-add the icons both on the initial render and when
     // the selected icon changes. Since the selected icon triggers a 
     // rerender, all of our previous tooltips get lost.
-    onIconsLoad: Ember.observer("ownedIcons.icons", "selectedIconId", function() {
-        // We need the uikit api for the tooltips.
-        ace.getBuiltinApi("rcp-fe-lol-uikit").then(uikit => {
-            this.get("icons").forEach((icon: any) => {
-                const el = this.$(".update-icon-list-item[data-icon-id='" + icon.id + "']");
-                uikit.getTooltipManager().assign(el, RenderTooltip(uikit, DESCRIPTIONS[icon.id]), {}, {
-                    targetAnchor: {
-                        x: "center",
-                        y: "top"
-                    },
-                    tooltipAnchor: {
-                        x: "center",
-                        y: "bottom"
-                    },
-                    offset: {
-                        x: 0,
-                        y: -2
-                    },
-                    hideEvent: "mouseleave"
+    onIconsLoad: Ember.observer("visible", "selectedIconId", function() {
+        Ember.run.scheduleOnce('afterRender', this, function() {
+            // We need the uikit api for the tooltips.
+            ace.getBuiltinApi("rcp-fe-lol-uikit").then(uikit => {
+                this.get("icons").forEach((icon: any) => {
+                    const el = this.$(".update-icon-list-item[data-icon-id='" + icon.id + "']");
+                    uikit.getTooltipManager().assign(el, RenderTooltip(uikit, DESCRIPTIONS[icon.id]), {}, {
+                        targetAnchor: {
+                            x: "center",
+                            y: "top"
+                        },
+                        tooltipAnchor: {
+                            x: "center",
+                            y: "bottom"
+                        },
+                        offset: {
+                            x: 0,
+                            y: -2
+                        },
+                        hideEvent: "mouseleave"
+                    });
                 });
             });
         });

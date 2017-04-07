@@ -29,7 +29,7 @@ module.exports = {
     output: {
         path: './src/built',
         filename: 'bundle.js',
-        publicPath: 'https://localhost:8080/built/'
+        publicPath: '/built/'
     },
 
     resolve: {
@@ -37,8 +37,16 @@ module.exports = {
         extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.styl', '.hbs', '.json']
     },
 
-    devtool: 'cheap-source-map',
+    devtool: 'inline-source-map',
     entry: [
         './src/main.ts'
+    ],
+
+    plugins: [
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            }
+        })
     ]
 };

@@ -12,19 +12,19 @@ export default (<PluginDescription>{
     builtinDependencies: {
         "rcp-fe-lol-collections": "~1.0.56",
         "rcp-fe-lol-champion-details": "~0.0.139",
-        "rcp-fe-lol-uikit": "~0.3.194"
+        "rcp-fe-lol-uikit": "~0.3.473-hotfix01"
     },
 
     setup() {
         // We hook the translation service to provide a title for our newly added tab.
         // We need to check for $hooked since the http hook fires for every onreadystatechange,
         // so not only when the request completes.
-        this.hook("http", req => {
-            if (req.$hooked) return;
-            redefine<string>(req, "responseText", orig => {
-                return orig().slice(0, -2) + `, "collections_sub_nav_skins": "Skins" }`;
+        this.hook("http", (req: XMLHttpRequest) => {
+            if ((<any>req).$hooked) return;
+            redefine(req, "responseText", get => {
+                return get().slice(0, -2) + `, "collections_sub_nav_skins": "Skins" }`;
             });
-            req.$hooked = true;
+            (<any>req).$hooked = true;
         }, /\/fe\/lol-collections\/trans.json/);
 
         // Fetch the various APIs we need and then register the new section.
@@ -32,7 +32,7 @@ export default (<PluginDescription>{
             this.getBuiltinApi("rcp-fe-lol-champion-details"),
             this.getBuiltinApi("rcp-fe-lol-collections"),
             this.getBuiltinApi("rcp-fe-lol-uikit"),
-            this.getBuiltinApi("rcp-fe-ember-libs").then(api => api.getEmber("2.4.5"))
+            this.getBuiltinApi("rcp-fe-ember-libs").then(api => api.getEmber("2.12.0"))
         ]).then(([championDetailApi, collectionsApi, uikitApi, Ember]) => {
             collectionsApi.registerSubSection({
                 name: "skins",
