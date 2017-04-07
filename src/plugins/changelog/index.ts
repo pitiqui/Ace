@@ -22,10 +22,10 @@ export default (<PluginDescription>{
     version: "2.0.0",
     description: "Displays Ace changelogs and the initial welcome message.",
     builtinDependencies: {
-        "rcp-fe-lol-uikit": "~0.3.473-hotfix01"
+        "rcp-fe-lol-uikit": "~0.3.480-hotfix01"
     },
     dependencies: {
-        "settings": "^1.0.0"
+        "settings": "^2.0.0"
     },
     setup() {
         const settings: SettingsAPI = this.getPlugin("settings").api;

@@ -321,7 +321,8 @@ export default class Ace {
 
                     const range = semver.validRange(depVer);
                     if (!range) return PluginState.UNMET_BUILTIN_DEPENDENCY; // Invalid version range.
-                    if (!semver.satisfies(dep.info.version, range)) return PluginState.UNMET_BUILTIN_DEPENDENCY; // Not statisfied.
+                    // We remove the - and onwards (alpha release tag) because rito the indie game dev company doesn't get how semver works.
+                    if (!semver.satisfies(dep.info.version.split("-")[0], range)) return PluginState.UNMET_BUILTIN_DEPENDENCY; // Not statisfied.
 
                     // Everything is fine.
                     return PluginState.LOADED;
@@ -403,7 +404,7 @@ export default class Ace {
         const html = `<div class="notification ${type}">
             <span class="title">${title}</span>
             <span class="not-message">${contents}</span>
-  	        <span class="close"><span class="cl1"></span><span class="cl2"></span></span>
+              <span class="close"><span class="cl1"></span><span class="cl2"></span></span>
         </div>`;
 
         const tmp = document.createElement("div");

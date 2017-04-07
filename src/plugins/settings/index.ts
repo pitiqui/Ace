@@ -9,11 +9,11 @@ import "./style";
 
 export default (<PluginDescription>{
     name: "settings",
-    version: "1.1.0",
+    version: "2.0.0",
     description: "Adds settings and plugin management for Ace plugins.",
     builtinDependencies: {
         "rcp-fe-app-controls": "~0.0.384",
-        "rcp-fe-lol-uikit": "~0.3.473-hotfix01",
+        "rcp-fe-lol-uikit": "~0.3.480-hotfix01",
     },
     setup() {
         const api = new API();

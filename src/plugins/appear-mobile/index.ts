@@ -13,6 +13,9 @@ export default (<PluginDescription>{
     name: "appear-mobile",
     version: "2.0.0",
     description: "Allows you to hide your status in the social options menu.",
+    dependencies: {
+        "settings": "^2.0.0"
+    },
     builtinDependencies: {
         "rcp-fe-lol-social": "~1.0.693-hotfix01"
     },

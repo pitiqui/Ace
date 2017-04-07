@@ -9,7 +9,7 @@ export default (<PluginDescription>{
     description: "Adds a quit button to champ select to easily dodge (LP loss and leaving restrictions will still apply)",
     disableByDefault: true,
     builtinDependencies: {
-        "rcp-fe-lol-champ-select": "~1.0.736-hotfix02"
+        "rcp-fe-lol-champ-select": "~1.0.753-hotfix01"
     },
     setup() {
         this.preinit("rcp-fe-lol-champ-select", () => {

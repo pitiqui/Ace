@@ -2,7 +2,7 @@
 
 Ace features a large set of plugins that all either change or add features. Want to suggest a new plugin? Join us in [#feature-requests](https://discord.gg/yuTBwVk) on Discord.
 
-## settings v1.1.0 
+## settings v2.0.0 
 
 Adds settings and plugin management for Ace plugins.
 
@@ -10,15 +10,15 @@ Adds settings and plugin management for Ace plugins.
 
 Displays Ace changelogs and the initial welcome message.
 
-## no-shutdown-prompt v1.0.0 
+## no-shutdown-prompt v2.0.0 
 
 Disables the default 'Are you sure you want to exit?' prompt, allowing you to exit the client immediately.
 
-## owned-skins v1.0.1 
+## owned-skins v2.0.0 
 
 Shows your owned skins in the `Collections` tab.
 
-## summoner-icon-description v1.0.1 
+## summoner-icon-description v2.0.0 
 
 Adds descriptions to your summoner icons.
 
@@ -32,7 +32,7 @@ Adds custom champion group filters for champion select.
 
 Replaces the RP and IP icons with their Legacy Client equivalents.
 
-## fancy-select v1.0.0 (disabled by default)
+## fancy-select v2.0.0 (disabled by default)
 
 Gives champion select a different, fancier current champion layout.
 

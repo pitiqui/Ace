@@ -4,11 +4,11 @@ import { PluginDescription } from "../../plugin";
 
 export default (<PluginDescription>{
     name: "fancy-select",
-    version: "1.0.0",
+    version: "2.0.0",
     description: "Gives champion select a different, fancier current champion layout.",
     disableByDefault: true,
     builtinDependencies: {
-        "rcp-fe-lol-champ-select": "~1.0.736-hotfix02"
+        "rcp-fe-lol-champ-select": "~1.0.753-hotfix01"
     },
     setup() {
         require("./style");

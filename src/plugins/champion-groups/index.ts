@@ -24,10 +24,10 @@ export default (<PluginDescription>{
         { image: "http://i.thijsmolendijk.nl/Pz7Lw.png" }
     ],
     dependencies: {
-        "settings": "^1.0.0"
+        "settings": "^2.0.0"
     },
     builtinDependencies: {
-        "rcp-fe-lol-champ-select": "~1.0.736-hotfix02"
+        "rcp-fe-lol-champ-select": "~1.0.753-hotfix01"
     },
     setup() {
         // Register settings view.
