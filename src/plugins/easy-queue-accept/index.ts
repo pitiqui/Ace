@@ -2,7 +2,7 @@
 
 import { PluginDescription } from "../../plugin";
 
-export default (<PluginDescription>{
+const plugin: PluginDescription = {
     name: "easy-queue-accept",
     version: "2.0.0",
     description: "Allows you to press the enter key to accept queue ready check.",
@@ -26,7 +26,8 @@ export default (<PluginDescription>{
             }, "ready-check-root-element");
         });
     }
-});
+};
+export default plugin;
 
 const Mixin = (Ember: any) => ({
     didInsertElement() {

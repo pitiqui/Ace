@@ -2,14 +2,14 @@
 
 import { PluginDescription } from "../../plugin";
 import { RegisterElementParams } from "../../hook-providers/register-element";
-import SettingsApi from "../settings/api";
 import { simple_promise_fetch, redefine } from "../../util";
 
+import SettingsApi from "../settings/api";
 import BuiltinPlugin from "../../builtin-plugin";
 
 import DROPDOWN_HTML = require("./dropdown.html");
 
-export default (<PluginDescription>{
+const plugin: PluginDescription = {
     name: "appear-mobile",
     version: "2.0.0",
     description: "Allows you to hide your status in the social options menu.",
@@ -102,9 +102,10 @@ export default (<PluginDescription>{
                 if (newVal !== "mobile") {
                     availability = newVal
                 }
-            })
+            });
 
             unregisterElement();
         }, "lol-social-actions-bar");
     }
-});
+};
+export default plugin;

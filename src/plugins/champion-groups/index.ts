@@ -15,7 +15,7 @@ export interface Group {
     championIds: number[];
 }
 
-export default (<PluginDescription>{
+const plugin: PluginDescription = {
     name: "champion-groups",
     version: "2.0.0",
     description: "Adds custom champion group filters for champion select.",
@@ -41,7 +41,8 @@ export default (<PluginDescription>{
             }, "champion-grid");
         });
     }
-});
+};
+export default plugin;
 
 const DEFAULT_GROUPS = ["fighter", "tank", "mage", "assassin", "support", "marksman"];
 

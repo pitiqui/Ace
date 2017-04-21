@@ -9,7 +9,7 @@ import GROUP_HTML = require("./group.html");
 import GROUP_NAME_HTML = require("./group-name.html");
 import "./style";
 
-export default (<PluginDescription>{
+const plugin: PluginDescription = {
     name: "recently-played",
     version: "2.0.0",
     description: "Adds a recent summoners group in your friends list that allows you to view, invite and add anyone you recently played with.",
@@ -181,4 +181,5 @@ export default (<PluginDescription>{
             unregisterElement();
         }, "lol-social-roster-group");
     }
-});
+};
+export default plugin;

@@ -17,7 +17,7 @@ interface ChangelogSettings {
     previousVersion: string;
 }
 
-export default (<PluginDescription>{
+const plugin: PluginDescription = {
     name: "changelog",
     version: "2.0.0",
     description: "Displays Ace changelogs and the initial welcome message.",
@@ -71,7 +71,8 @@ export default (<PluginDescription>{
             }
         });
     }
-});
+};
+export default plugin;
 
 /**
  * Shows a full-page backdrop with the provided html as contents.

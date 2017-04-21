@@ -5,7 +5,7 @@ import { simple_promise_fetch } from "../../util";
 
 import "./style";
 
-export default (<PluginDescription>{
+const plugin: PluginDescription = {
     name: "summoner-tooltip",
     version: "0.1.0",
     description: "Shows tooltips with information about a summoner in champion select.",
@@ -26,7 +26,8 @@ export default (<PluginDescription>{
             }, "champion-select");
         });
     }
-});
+};
+export default plugin;
 
 const Mixin = (Ember: any, uikit: any) => ({
     // Fired whenever the amount of players on our team changes.

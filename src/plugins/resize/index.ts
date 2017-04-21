@@ -4,7 +4,7 @@ import { PluginDescription } from "../../plugin";
 
 import "./style";
 
-export default (<PluginDescription>{
+const plugin: PluginDescription = {
     name: "resize",
     version: "1.0.0",
     description: "Allows you to resize the client, as long as it keeps its standard aspect ratio.",
@@ -66,4 +66,5 @@ export default (<PluginDescription>{
             window.addEventListener("mouseup", dragEnd);
         });
     }
-});
+};
+export default plugin;

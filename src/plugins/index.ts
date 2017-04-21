@@ -17,7 +17,7 @@ import EasyQueueDodge from "./easy-queue-dodge";
 import EasyQueueAccept from "./easy-queue-accept";
 import PracticeToolExtraBots from "./practice-tool-extra-bots";
 import AppearMobile from "./appear-mobile";
-import ChatCommands from "./chat-commands"
+import ChatCommands from "./chat-commands";
 
 export const PLUGINS: PluginDescription[] = [
     Settings,

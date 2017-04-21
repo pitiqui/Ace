@@ -2,7 +2,7 @@
 
 import { PluginDescription } from "../../plugin";
 
-export default (<PluginDescription>{
+const plugin: PluginDescription = {
     name: "fancy-select",
     version: "2.0.0",
     description: "Gives champion select a different, fancier current champion layout.",
@@ -23,7 +23,8 @@ export default (<PluginDescription>{
             }, "champion-select");
         });
     }
-});
+};
+export default plugin;
 
 const PlayerMixin = (Ember: any) => ({
     onChampionChange: Ember.observer("championForIcon", function() {

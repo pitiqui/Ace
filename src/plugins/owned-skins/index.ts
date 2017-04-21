@@ -4,7 +4,7 @@ import { PluginDescription } from "../../plugin";
 import { redefine } from "../../util";
 import getComponent from "./component";
 
-export default (<PluginDescription>{
+const plugin: PluginDescription = {
     name: "owned-skins",
     version: "2.0.0",
     description: "Shows your owned skins in the `Collections` tab.",
@@ -46,4 +46,5 @@ export default (<PluginDescription>{
             });
         });
     }
-});
+};
+export default plugin;

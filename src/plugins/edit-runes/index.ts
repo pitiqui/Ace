@@ -5,7 +5,7 @@ import Ace from "../../ace";
 
 import "./style";
 
-export default (<PluginDescription>{
+const plugin: PluginDescription = {
     name: "edit-runes",
     version: "0.1.0",
     description: "Allows you to edit runes in champion select.",
@@ -27,7 +27,8 @@ export default (<PluginDescription>{
             }, "champion-select");
         });
     }
-});
+};
+export default plugin;
 
 const Mixin = (Ember: any, uikit: any, ace: Ace) => ({
     didInsertElement() {

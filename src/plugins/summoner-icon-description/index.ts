@@ -5,7 +5,7 @@ import Ace from "../../ace";
 
 import DESCRIPTIONS = require("./descriptions.json");
 
-export default (<PluginDescription>{
+const plugin: PluginDescription = {
     name: "summoner-icon-description",
     version: "2.0.0",
     description: "Adds descriptions to your summoner icons.",
@@ -32,7 +32,8 @@ export default (<PluginDescription>{
             }, "update-icon-component");
         });
     }
-});
+};
+export default plugin;
 
 const Mixin = (Ember: any, ace: Ace) => ({
     // We need to re-add the icons both on the initial render and when

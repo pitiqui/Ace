@@ -2,13 +2,13 @@
 
 import { PluginDescription } from "../../plugin";
 
-export default (<PluginDescription>{
+const plugin: PluginDescription = {
     name: "practice-tool-extra-bots",
     version: "2.0.0",
     description: "Allows you to add extra bots to the pracitce tool lobby.",
     disableByDefault: true,
     builtinDependencies: {
-        "rcp-fe-lol-parties": "~0.1.29-hotfix02"
+        "rcp-fe-lol-parties": "~0.2.34"
     },
     setup() {
         this.preinit("rcp-fe-lol-parties", () => {
@@ -18,7 +18,8 @@ export default (<PluginDescription>{
             }, "generateCustomGamePayload");
         });
     }
-});
+};
+export default plugin;
 
 const Mixin = (Ember:any) => ({
     generateCustomGamePayload: function() { // Default functionality

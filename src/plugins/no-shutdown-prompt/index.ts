@@ -2,7 +2,7 @@
 
 import { PluginDescription } from "../../plugin";
 
-export default (<PluginDescription>{
+const plugin: PluginDescription = {
     name: "no-shutdown-prompt",
     version: "2.0.0",
     description: "Disables the default 'Are you sure you want to exit?' prompt, allowing you to exit the client immediately.",
@@ -14,4 +14,5 @@ export default (<PluginDescription>{
             plugin.api.setExitConfirmEnabled(false);
         });
     }
-});
+};
+export default plugin;

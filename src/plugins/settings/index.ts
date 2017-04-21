@@ -7,7 +7,7 @@ import RootComponent from "./components/root/root-component";
 import API from "./api";
 import "./style";
 
-export default (<PluginDescription>{
+const plugin: PluginDescription = {
     name: "settings",
     version: "2.0.0",
     description: "Adds settings and plugin management for Ace plugins.",
@@ -38,7 +38,8 @@ export default (<PluginDescription>{
 
         return api.load().then(() => api);
     }
-});
+};
+export default plugin;
 
 const presentSettings = (uikit: any, ace: any, api: any) => () => {
     const parent = document.createElement("lol-uikit-full-page-backdrop");

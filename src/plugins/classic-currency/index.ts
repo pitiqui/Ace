@@ -2,7 +2,7 @@
 
 import { PluginDescription } from "../../plugin";
 
-export default (<PluginDescription>{
+const plugin: PluginDescription = {
     name: "classic-currency",
     version: "2.0.0",
     description: "Replaces the RP and IP icons with their Legacy Client equivalents.",
@@ -13,4 +13,5 @@ export default (<PluginDescription>{
     setup() {
         require("./style");
     }
-});
+};
+export default plugin;

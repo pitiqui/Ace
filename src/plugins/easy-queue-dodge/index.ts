@@ -3,7 +3,7 @@
 import { PluginDescription } from "../../plugin";
 import { simple_promise_fetch } from "../../util";
 
-export default (<PluginDescription>{
+const plugin: PluginDescription = {
     name: "easy-queue-dodge",
     version: "2.0.0",
     description: "Adds a quit button to champ select to easily dodge (LP loss and leaving restrictions will still apply)",
@@ -19,7 +19,8 @@ export default (<PluginDescription>{
             }, "champion-select");
         });
     }
-});
+};
+export default plugin;
 
 const Mixin = (Ember: any) => ({
     didInsertElement() {
@@ -33,7 +34,10 @@ const Mixin = (Ember: any) => ({
             })
         });
     },
-    showQuitButton: Ember.computed(function() {
+    showQuitButton: Ember.computed("queue.type", function() {
+        return this.get("queue.type") !== "TUTORIAL_GAME";
+    }),
+    disableQuitButton: Ember.computed("queue.type", function() {
         return this.get("queue.type") !== "TUTORIAL_GAME";
     })
 });
