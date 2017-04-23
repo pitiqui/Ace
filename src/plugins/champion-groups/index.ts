@@ -31,7 +31,7 @@ const plugin: PluginDescription = {
     },
     setup() {
         // Register settings view.
-        const settingsApi = this.getPlugin("settings").api;
+        const settingsApi: SettingsAPI = this.getPlugin("settings").api;
         settingsApi.addSettingsView(this, createConfigPanel(this.ace, settingsApi));
 
         this.preinit("rcp-fe-lol-champ-select", () => {

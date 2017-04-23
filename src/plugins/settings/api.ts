@@ -8,7 +8,7 @@ export default class API {
     private localSettings: any;
     private dirty: boolean;
     private settingListeners: (() => void)[];
-    private pluginSettings: { [name: string]: Vue };
+    private pluginSettings: { [name: string]: Partial<Vue> };
 
     constructor() {
         this.localSettings = {};
@@ -20,14 +20,14 @@ export default class API {
     /**
      * Registers a custom settings view for the specified plugin.
      */
-    addSettingsView(plugin: Plugin, component: Vue) {
+    addSettingsView(plugin: Plugin, component: Partial<Vue>) {
         this.pluginSettings[plugin.name] = component;
     }
 
     /**
      * Returns the custom settings view for the plugin, or null if not applicable.
      */
-    getSettingsView(plugin: Plugin): Vue | null {
+    getSettingsView(plugin: Plugin): Partial<Vue> | null {
         return this.pluginSettings[plugin.name] || null;
     }
 
@@ -88,18 +88,11 @@ export default class API {
      */
     save(): Promise<void> {
         if (!this.dirty) return Promise.resolve();
-
-        return new Promise<void>(resolve => {
-            const http = new XMLHttpRequest();
-            http.open("PATCH", "/lol-settings/v1/local/ace", true);
-            http.setRequestHeader("Content-Type", "application/json");
-            http.onreadystatechange = () => {
-                if (http.readyState === XMLHttpRequest.DONE) {
-                    this.dirty = false;
-                    resolve();
-                }
-            };
-            http.send(JSON.stringify({ data: this.localSettings, schemaVersion: 1 }));
+        return simple_promise_fetch("/lol-settings/v1/local/ace", "PATCH", {
+            data: this.localSettings,
+            schemaVersion: 1
+        }).then(() => {
+            this.dirty = false;
         });
     }
 }

@@ -87,7 +87,7 @@ export default function(Ember: Ember, championDetails: any, uikit: any) {
         },
 
         actions: {
-            sort(this: SkinsEmberComponent, mode: "alphabetical" | "mastery" | "count") {
+            sort(this: SkinsEmberComponent, mode: "alphabetical" | "mastery" | "count" | "date") {
                 if (mode === this.get("sortMode")) return;
 
                 // Unset previous, set new property to update the visual component.
@@ -101,12 +101,10 @@ export default function(Ember: Ember, championDetails: any, uikit: any) {
                 // unless we actually give it a _different_ array instance.
                 if (mode === "alphabetical") {
                     this._data.sort(sortAlphabetically);
-                    this.set("champions", Ember.A(this._data.slice()));
                 } else if (mode === "count") {
-                    this._data.sort((a: any, b: any) => b.ownedSkins.length - a.ownedSkins.length);
-                    this.set("champions", Ember.A(this._data.slice()));
+                    this._data.sort((a: Champion, b: Champion) => b.ownedSkins.length - a.ownedSkins.length);
                 } else if (mode === "mastery") {
-                    this._data.sort((a: any, b: any) => {
+                    this._data.sort((a: Champion, b: Champion) => {
                         const masteryA = this._mastery.filter(x => x.championId === a.id)[0];
                         const masteryB = this._mastery.filter(x => x.championId === b.id)[0];
                         if ((masteryB ? masteryB.championLevel : 0) - (masteryA ? masteryA.championLevel : 0) != 0) {
@@ -115,8 +113,21 @@ export default function(Ember: Ember, championDetails: any, uikit: any) {
                             return (masteryB ? masteryB.championPoints : 0) - (masteryA ? masteryA.championPoints : 0);
                         }
                     });
-                    this.set("champions", Ember.A(this._data.slice()));
+                } else if (mode === "date") {
+                    this._data.sort((a: Champion, b: Champion) => {
+                        if (a.ownedSkins.length && b.ownedSkins.length) {
+                            a.ownedSkins.sort((x: Skin, y: Skin) => {
+                                return x.ownership.rental.purchaseDate - y.ownership.rental.purchaseDate;
+                            });
+                            b.ownedSkins.sort((x: Skin, y: Skin) => {
+                                return x.ownership.rental.purchaseDate - y.ownership.rental.purchaseDate;
+                            });
+                            return a.ownedSkins[0].ownership.rental.purchaseDate - b.ownedSkins[0].ownership.rental.purchaseDate;
+                        }
+                        return b.ownedSkins.length - a.ownedSkins.length;
+                    });
                 }
+                this.set("champions", Ember.A(this._data.slice()));
             },
 
             toggleUnowned(this: SkinsEmberComponent) {

@@ -68,6 +68,9 @@ export default class Ace {
         this.fetchBuiltinPluginInformation().then(() => this.fetchToggledPlugins()).then(() => {
             (<any>window).$AcePending === undefined || (<any>window).$AcePending.forEach((p: any) => this.handleOnLoad(p));
             delete (<any>window).$AcePending;
+            const clone = this.pendingOnloads.slice();
+            this.pendingOnloads = [];
+            clone.forEach(pending => this.handleOnLoad(pending));
             if (this.dormant) return;
 
             this.hookManager = new HookManager(this);

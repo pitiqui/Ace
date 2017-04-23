@@ -2,7 +2,12 @@
 
 import { PluginDescription } from "../../plugin"
 
-const commands: { [command: string]: (msg: string, id: string) => string } = { // List of commands
+import API from "./api";
+
+export type ChatCommand = (msg: string, id: string) => string;
+export type CommandList = { [commandName: string]: ChatCommand };
+
+let chatCommands: CommandList = { // List of commands
     shrug(msg: string) {
         return msg + " ¯\\_(ツ)_/¯";
     },
@@ -25,9 +30,11 @@ export default (<PluginDescription>{
         "rcp-fe-lol-social": "~1.0.693-hotfix01"
     },
     setup() {
-        this.hook("http", () => {}, /\/lol-chat\/v1\/conversations\/.*\/messages/, (req: XMLHttpRequest, url: string, ...args: any[]) => {
+        const api = new API(chatCommands);
+
+        this.hook("http", () => {}, /^\/lol-chat\/v1\/conversations\/.*\/messages$/, (req: XMLHttpRequest, url: string, ...args: any[]) => {
             let data = args[0];
-            let match = url.match(/\/lol-chat\/v1\/conversations\/(.*)\/messages/);
+            let match = url.match(/^\/lol-chat\/v1\/conversations\/(.*)\/messages$/);
             let id = match && match[1] || "";
 
             if (typeof data === "string") {
@@ -39,10 +46,10 @@ export default (<PluginDescription>{
                     let command = text.split(" ")[0];
                     text = text.split(" ").slice(1).join(" ")
 
-                    if (commands[command]) {
+                    if (chatCommands[command]) {
                         msg = {
                             ...msg,
-                            body: commands[command](text, id)
+                            body: chatCommands[command](text, id)
                         };
                     }
                 }
@@ -52,5 +59,7 @@ export default (<PluginDescription>{
 
             return args;
         });
+
+        return api;
     }
 })

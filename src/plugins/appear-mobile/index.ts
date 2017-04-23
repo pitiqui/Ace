@@ -2,7 +2,7 @@
 
 import { PluginDescription } from "../../plugin";
 import { RegisterElementParams } from "../../hook-providers/register-element";
-import { simple_promise_fetch, redefine } from "../../util";
+import { simple_promise_fetch } from "../../util";
 
 import SettingsApi from "../settings/api";
 import BuiltinPlugin from "../../builtin-plugin";
@@ -22,7 +22,6 @@ const plugin: PluginDescription = {
     setup() {
         const settings: SettingsApi = this.getPlugin("settings").api;
         let appearMobile = settings.get("appearMobile.toggled", false);
-        let availability = "chat";
 
         this.postinit("rcp-fe-lol-social", (plugin: BuiltinPlugin) => {
             const socket = plugin.provider.getSocket();
@@ -84,6 +83,7 @@ const plugin: PluginDescription = {
 
             proto.appearMobileChanged = function(event: Event) {
                 appearMobile = (<any>event.target).checked;
+                this.data.me.availability = appearMobile ? "mobile" : "chat";
                 this.data.me.lol.gameStatus = appearMobile ? "outOfGame" : this.data.me.lol.gameStatus;
                 this.data.saveMe();
 
@@ -94,15 +94,6 @@ const plugin: PluginDescription = {
                 });
                 settings.save();
             }
-
-            proto.data.me.availability = availability;
-            redefine(proto.data.me, "availability", () => { // Fixes an issue with you looking like your online when your really appearing mobile
-                return appearMobile ? "mobile" : availability
-            }, (newVal) => {
-                if (newVal !== "mobile") {
-                    availability = newVal
-                }
-            });
 
             unregisterElement();
         }, "lol-social-actions-bar");

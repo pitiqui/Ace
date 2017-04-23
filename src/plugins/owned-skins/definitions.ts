@@ -31,11 +31,11 @@ export abstract class SkinsEmberComponent {
     _mastery: ChampionMastery[];
     $: (selector: string) => any;
 
-    abstract get(key: "sortMode"): "alphabetical" | "mastery" | "count";
+    abstract get(key: "sortMode"): "alphabetical" | "mastery" | "count" | "date";
     abstract get(key: "showUnowned"): boolean;
     abstract get(key: "champions"): Champion[];
 
-    abstract set(key: "sortMode", val: "alphabetical" | "mastery" | "count"): void;
+    abstract set(key: "sortMode", val: "alphabetical" | "mastery" | "count" | "date"): void;
     abstract set(key: string, val: any): void;
 
     abstract set(key: "isLoading", val: boolean): void;

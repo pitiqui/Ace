@@ -16,8 +16,10 @@ import RecentlyPlayed from "./recently-played";
 import EasyQueueDodge from "./easy-queue-dodge";
 import EasyQueueAccept from "./easy-queue-accept";
 import PracticeToolExtraBots from "./practice-tool-extra-bots";
-import AppearMobile from "./appear-mobile";
+import AppearMobile from "./appear-mobile"; //Needs a better method of working
 import ChatCommands from "./chat-commands";
+import InstaLock from "./insta-lock";
+//import SummonerTooltip from "./summoner-tooltip" //Soon TM
 
 export const PLUGINS: PluginDescription[] = [
     Settings,
@@ -35,6 +37,8 @@ export const PLUGINS: PluginDescription[] = [
     PracticeToolExtraBots,
     AppearMobile,
     ChatCommands,
+    InstaLock,
+    //SummonerTooltip,
 ];
 
 export default function register(ace: Ace) {

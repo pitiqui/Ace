@@ -18,25 +18,24 @@ const plugin: PluginDescription = {
     setup() {
         const api = new API();
 
-        Promise.all([
-            this.getBuiltinApi("rcp-fe-lol-uikit"),
-            this.getBuiltinApi("rcp-fe-app-controls")
-        ]).then(([uikit]) => {
+        return this.getBuiltinApi("rcp-fe-lol-uikit").then(uikit => {
             const button = document.createElement("div");
             button.className = "app-controls-button app-controls-ace-settings";
             button.setAttribute("action", "_getDialogHeader"); // dummy method to not throw an error
             button.onclick = presentSettings(uikit, this.ace, api);
 
-            setTimeout(() => {
-                do {
-                    var appControls = document.querySelector(".riotclient-app-controls");
-                } while (appControls === null)
-
-                appControls.insertBefore(button, appControls.querySelector(".app-controls-settings"))
-            }, 0);
+            function insertAceButton() {
+                var appControls = document.querySelector(".riotclient-app-controls");
+                if (appControls === null || appControls.querySelector(".app-controls-settings") === null) {
+                    setTimeout(insertAceButton, 100);
+                } else {
+                    appControls.insertBefore(button, appControls.querySelector(".app-controls-settings"));
+                }
+            }
+            insertAceButton();
+        }).then(() => {
+            return api.load().then(() => api);
         });
-
-        return api.load().then(() => api);
     }
 };
 export default plugin;

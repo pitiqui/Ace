@@ -31,13 +31,13 @@ const Mixin = (Ember: any) => ({
                 simple_promise_fetch("/lol-login/v1/session/invoke?destination=gameService&method=quitGame", "POST", "args=[]", "application/x-www-form-urlencoded");
                 simple_promise_fetch("/lol-lobby/v1/lobby", "DELETE");
                 simple_promise_fetch("/lol-gameflow/v1/battle-training/stop", "POST");
-            })
+            });
         });
     },
     showQuitButton: Ember.computed("queue.type", function() {
         return this.get("queue.type") !== "TUTORIAL_GAME";
     }),
     disableQuitButton: Ember.computed("queue.type", function() {
-        return this.get("queue.type") !== "TUTORIAL_GAME";
+        return this.get("queue.type") === "TUTORIAL_GAME";
     })
 });

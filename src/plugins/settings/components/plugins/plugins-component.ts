@@ -13,7 +13,7 @@ import "./style";
     template: LAYOUT
 })
 export default class PluginsComponent extends Vue {
-    activeSettingsView: Vue | null;
+    activeSettingsView: Partial<Vue> | null;
     activeSettingsPlugin: Plugin | null;
 
     pendingToggles: string[];

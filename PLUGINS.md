@@ -59,3 +59,7 @@ Allows you to hide your status in the social options menu.
 ## chat-commands v2.0.0 
 
 Adds chat commands to messaging, prefixed by forward-slash.
+
+## insta-lock v2.0.0 
+
+Picks the chosen champion automatically when it is your turn to pick and/or sends a message as soon as champion select loads.

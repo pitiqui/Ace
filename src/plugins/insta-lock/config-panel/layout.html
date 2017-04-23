@@ -1,0 +1,31 @@
+<div style="width: 100%; height: 100%">
+    <lol-uikit-flat-checkbox class="insta-lock-default">
+        <input type="checkbox" v-model="pickChampion">
+        <label for="pickChampion">Enable champion pick</label>
+    </lol-uikit-flat-checkbox>
+    <div class="insta-lock-settings">
+        <div class="contents">
+            <div class="centered" v-if="loading || errored">
+                <div class="loading-spinner" v-if="loading"></div>
+                <div class="error" v-if="errored">You need to be logged in to pick a champion. Sorry :(</div>
+            </div>
+            <lol-uikit-flat-input v-if="!loading && !errored">
+                <input type="text" placeholder="Filter..." v-model="filter">
+            </lol-uikit-flat-input>
+            <lol-uikit-scrollable v-if="!loading && !errored" overflow-masks="enabled">
+                <lol-uikit-champion-thumbnail @click="chooseChampion(champ)" :name="champ.name" :disabled="!isSelected(champ)" v-for="champ in champions" v-if="isFiltered(champ)">
+                    <lol-uikit-thumbnail :disabled="!isSelected(champ)">
+                        <img :src="'/lol-game-data/assets/v1/champion-icons/' + champ.id + '.png'">
+                    </lol-uikit-thumbnail>
+                </lol-uikit-champion-thumbnail>
+            </lol-uikit-scrollable>
+        </div>
+    </div>
+    <lol-uikit-flat-checkbox class="insta-lock-default">
+        <input type="checkbox" v-model="sendMessage">
+        <label for="pickChampion">Enable message send</label>
+    </lol-uikit-flat-checkbox>
+    <lol-uikit-flat-input>
+        <input type="text" placeholder="Message text" :disabled="!sendMessage" v-model="message">
+    </lol-uikit-flat-input>
+</div>
