@@ -1,3 +1,5 @@
+## Download [here](https://github.com/ZombieWizzard/Ace-Windows/releases/latest)
+
 ![Ace Logo](assets/ace_logo.png?raw=true)  
 [![Build Status](https://travis-ci.org/ZombieWizzard/Ace.svg?branch=master)](https://travis-ci.org/ZombieWizzard/Ace)
 [![Ace Discord](https://img.shields.io/badge/discord-Ace-738bd7.svg?style=flat)](https://discord.gg/bfxdsRC)
