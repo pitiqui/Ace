@@ -15,6 +15,7 @@ import CHANGELOG_HTML = require("./changelog/index.html");
 interface ChangelogSettings {
     didShowWelcome: boolean;
     previousVersion: string;
+    ace2Readme: boolean;
 }
 
 const plugin: PluginDescription = {
@@ -32,7 +33,8 @@ const plugin: PluginDescription = {
 
         const state = settings.get<ChangelogSettings>("changelog", {
             didShowWelcome: false,
-            previousVersion: window.ACE_VERSION
+            previousVersion: window.ACE_VERSION,
+            ace2Readme: false
         });
 
         // We need lol-uikit to show a full page modal. 
@@ -47,7 +49,7 @@ const plugin: PluginDescription = {
             }
 
             // If we updated, show the changelog and update the previousVersion prop.
-            if (semver.gt(window.ACE_VERSION, state.previousVersion)) {
+            if (semver.gt(window.ACE_VERSION, state.previousVersion) || !state.ace2Readme) {
                 state.previousVersion = window.ACE_VERSION;
                 settings.mergeSettings({ changelog: state });
                 settings.save(); 
