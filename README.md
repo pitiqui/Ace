@@ -12,11 +12,13 @@ Ace currently in beta and might not completely stable. Steps have been taken to 
 - **no-shutdown-prompt**: Removes the `Are you sure you want to quit?` prompt that normally comes up when closing the client.
 - **owned-skins**: Adds a new tab in `Collections` that shows all of your owned skins, along with some general statistics.  
 ![GIF of owned-skins](https://thumbs.gfycat.com/AgedSlowDiamondbackrattlesnake-size_restricted.gif)
-- **resize**: Allows you to resize the client to any size, as long as it keeps the same aspect ratio.
-- **summoner-icon-description**: Adds a simple tooltip on each summoner icon, detailing where it came from.  
+<!--- **resize**: Allows you to resize the client to any size, as long as it keeps the same aspect ratio.-->
+- **summoner-icon-description**: Adds a simple tooltip on each summoner icon, detailing where it came from.
 ![Image of summoner-icon-description](http://i.imgur.com/f2S0tYX.png)
-- **summoner-tooltip**: Adds a tooltip in champion select that shows some ranked statistics about the player, including current rank, W/L and promo status.  
-![Image of summoner-tooltip](http://i.imgur.com/dA5Sedw.png)
+<!--- **summoner-tooltip**: Adds a tooltip in champion select that shows some ranked statistics about the player, including current rank, W/L and promo status.  
+![Image of summoner-tooltip](http://i.imgur.com/dA5Sedw.png)-->
+- **easy-queue-dodge**: Adds a quit button to all queues, to allow you to dodge champion select without closing the client. (WARNING: LP Loss and leaving restrictions will still incur)
+- **insta-lock**: Allows you to configure a champion to pick and/or a message to send automatically in champion select.
 
 The entire list of plugins can be found [here](/PLUGINS.md)
 
