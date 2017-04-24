@@ -22,6 +22,12 @@ Ace currently in beta and might not completely stable. Steps have been taken to 
 
 The entire list of plugins can be found [here](/PLUGINS.md)
 
+# Installing/Using Ace
+
+To Install Ace download the latest release of Ace [here](https://github.com/ZombieWizzard/Ace-Windows/releases/latest) and run it. It may ask you for admin access if it is your first time running Ace v2+, this is normal and is required for Ace to work.
+
+If you find any bugs or need any assistance with installing Ace feel free to create an issue [here](https://github.com/ZombieWizzard/Ace/issues) and I will attempt to assist you with your problem.
+
 # Developing Ace
 
 Ace uses TypeScript and Stylus as main languages, with Webpack as bundling tool. The webpack development server can be started using `npm run watch`, which will start a server over at `https://localhost:8080`. The easiest way to develop with this server is to run the launcher with the argument `--ace-dev` which will automatically use a javascript file that loads from the webpack server and disables HTTPS certificate checking.
