@@ -20,6 +20,7 @@ import AppearMobile from "./appear-mobile"; //Needs a better method of working
 import ChatCommands from "./chat-commands";
 import InstaLock from "./insta-lock";
 //import SummonerTooltip from "./summoner-tooltip" //Soon TM
+import ChampionProfile from "./champion-profile"
 
 export const PLUGINS: PluginDescription[] = [
     Settings,
@@ -39,6 +40,7 @@ export const PLUGINS: PluginDescription[] = [
     ChatCommands,
     InstaLock,
     //SummonerTooltip,
+    ChampionProfile,
 ];
 
 export default function register(ace: Ace) {
