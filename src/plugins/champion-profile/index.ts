@@ -26,6 +26,7 @@ const plugin: PluginDescription = {
         });
     }
 };
+export default plugin;
 
 const Buttons = (Ember: any, ace: Ace) => ({
     didInsertElement() {
