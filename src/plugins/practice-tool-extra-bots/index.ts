@@ -5,7 +5,7 @@ import { PluginDescription } from "../../plugin";
 const plugin: PluginDescription = {
     name: "practice-tool-extra-bots",
     version: "2.0.0",
-    description: "Allows you to add extra bots to the pracitce tool lobby.",
+    description: "Allows you to add extra bots to the practice tool lobby.",
     disableByDefault: true,
     builtinDependencies: {
         "rcp-fe-lol-parties": "~0.2.34"

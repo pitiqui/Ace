@@ -28,9 +28,13 @@ const Mixin = (Ember: any) => ({
 
         Ember.run.scheduleOnce('afterRender', this, function() {
             this.$(document).on("click", ".quit-button", () => {
-                simple_promise_fetch("/lol-login/v1/session/invoke?destination=gameService&method=quitGame", "POST", "args=[]", "application/x-www-form-urlencoded");
-                simple_promise_fetch("/lol-lobby/v1/lobby", "DELETE");
-                simple_promise_fetch("/lol-gameflow/v1/battle-training/stop", "POST");
+                Ember.run(function(){
+                    Promise.all([
+                        simple_promise_fetch("/lol-login/v1/session/invoke?destination=gameService&method=quitGame", "POST", "args=[]", "application/x-www-form-urlencoded"),
+                        simple_promise_fetch("/lol-lobby/v1/lobby", "DELETE"),
+                        simple_promise_fetch("/lol-gameflow/v1/battle-training/stop", "POST")
+                    ]).catch();
+                });
             });
         });
     },

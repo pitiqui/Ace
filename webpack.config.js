@@ -47,6 +47,14 @@ module.exports = {
             compress: {
                 warnings: false
             }
-        })
+        }),
+        function() { // This makes it so the Travis CI build will fail if there are errors
+            this.plugin("done", function(stats) {
+                if (stats.compilation.errors && stats.compilation.errors.length && process.argv.indexOf("--watch") === -1) {
+                    console.log(stats.compilation.errors);
+                    process.exit(1);
+                }
+            })
+        }
     ]
 };

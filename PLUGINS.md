@@ -50,7 +50,7 @@ Allows you to press the enter key to accept queue ready check.
 
 ## practice-tool-extra-bots v2.0.0 (disabled by default)
 
-Allows you to add extra bots to the pracitce tool lobby.
+Allows you to add extra bots to the practice tool lobby.
 
 ## appear-mobile v2.0.0 
 
