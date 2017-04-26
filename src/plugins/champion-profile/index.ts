@@ -21,13 +21,13 @@ export default (<PluginDescription>{
     this.preinit("rcp-fe-lol-profiles", () => {
       let unregister = this.hook("ember-component", Ember => {
         unregister();
-        return Mixin(Ember, this.ace);
+        return Buttons(Ember, this.ace);
       }, "profile-wrapper-component");
     });
   }
 });
 
-const Mixin = (Ember: any, ace: Ace) => ({
+const Buttons = (Ember: any, ace: Ace) => ({
   didInsertElement() {
     this._super();
 
@@ -146,14 +146,15 @@ const Mixin = (Ember: any, ace: Ace) => ({
       }
 
       if(settings.get("championProfile.champion", "") != "" || settings.get("championProfile.skin", "") != "") {
-        Ember.run.later((function() {
+        Ember.run.later(this, () => {
           const img = document.getElementsByClassName("masked-image")[0].children[0];
           const src = img.getAttribute("src");
           if (src) {
             let newURL = "/lol-game-data/assets/v1/champion-splashes/" + settings.get("championProfile.champion", "") + "/" + settings.get("championProfile.skin", "") + ".jpg";
             img.setAttribute("src", newURL);
           }
-        }), 250);
+        }, 250);
+
       }
     });
   }
