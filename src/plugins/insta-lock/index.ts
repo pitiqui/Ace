@@ -22,6 +22,18 @@ const plugin: PluginDescription = {
         const settings: settingsAPI = this.getPlugin("settings").api;
         settings.addSettingsView(this, createConfigPanel(this.ace, settings));
 
+        function tryToSend(conversation: {id: string}, retries: number = 0): Promise<String> {
+            return simple_promise_fetch(`/lol-chat/v1/conversations/${conversation.id}/messages`, "POST", {
+                body: settings.get("instaLock.message", ""),
+                type: "chat"
+            }).catch(err => {
+                if (retries >= 5) {
+                    throw Error(`Retried 5 times: ${err}`);
+                }
+                return tryToSend(conversation, retries + 1);
+            });
+        }
+
         this.preinit("rcp-fe-lol-champ-select", () => {
             let unregister = this.hook("ember-component", Ember => {
                 unregister();
@@ -36,10 +48,7 @@ const plugin: PluginDescription = {
                 if (/^\/lol-chat\/v1\/conversations\/.*$/.test(data.uri) && data.eventType === "Update") {
                     let conversation: {id: string, type: "chat" | "club" | "championSelect"} = data.data;
                     if (conversation.type === "championSelect" && lastConversationId != conversation.id) {
-                        simple_promise_fetch(`/lol-chat/v1/conversations/${conversation.id}/messages`, "POST", {
-                            body: settings.get("instaLock.message", ""),
-                            type: "chat"
-                        });
+                        tryToSend(conversation);
                         lastConversationId = conversation.id;
                     }
                 }
