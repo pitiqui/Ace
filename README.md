@@ -1,13 +1,11 @@
-## Download [here](https://github.com/ZombieWizzard/Ace-Windows/releases/latest)
-
 ![Ace Logo](assets/ace_logo.png?raw=true)  
 [![Build Status](https://travis-ci.org/ZombieWizzard/Ace.svg?branch=master)](https://travis-ci.org/ZombieWizzard/Ace)
 [![Ace Discord](https://img.shields.io/badge/discord-Ace-738bd7.svg?style=flat)](https://discord.gg/bfxdsRC)
 
-Ace - Alpha Client Enhancer.  
-A project that aims to get useful features into the new League of Legends client that Riot Games has been developing.  
+Ace - Alpha Client (LCU) Enhancer
+## Download [here](https://github.com/ZombieWizzard/Ace-Windows/releases/latest)
 
-Ace currently in beta and might not completely stable. Steps have been taken to ensure that Ace does not crash the client and day-to-day usage should be as stable as the normal client, but you should not be surprised if something goes wrong.
+Ace is currently in beta and might not completely stable. Steps have been taken to ensure that Ace does not crash the client and day-to-day usage should be as stable as the normal client, but you should not be surprised if something goes wrong.
 
 # Plugins
 
