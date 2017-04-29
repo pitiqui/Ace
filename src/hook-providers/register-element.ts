@@ -38,7 +38,7 @@ export function register(fun: Callback, matcher: string) {
  * Initializes this hook provider by wrapping `document.registerElement`.
  */
 export function initialize() {
-    wrap_method(document, "registerElement", (original, [name, args]) => {
+    wrap_method(<any>document, "registerElement", (original, [name, args]) => {
         HOOKS.filter(h => h.matcher === name).forEach(h => h.fun(args));
         return original(name, args);
     });
