@@ -18,6 +18,7 @@ export default function(ace: Ace, settings: SettingsAPI) {
     })
     class InstaLockConfigPanel extends Vue {
         pickChampion: boolean;
+        lockIn: boolean;
         sendMessage: boolean;
 
         champion: number;
@@ -34,6 +35,7 @@ export default function(ace: Ace, settings: SettingsAPI) {
         data() {
             return {
                 pickChampion: settings.get("instaLock.pickChampion", false),
+                lockIn: settings.get("instaLock.lockIn", false),
                 sendMessage: settings.get("instaLock.sendMessage", false),
                 champion: settings.get("instaLock.champion", 0),
                 message: settings.get("instaLock.message", ""),
@@ -64,6 +66,7 @@ export default function(ace: Ace, settings: SettingsAPI) {
             settings.mergeSettings({
                 instaLock: {
                     pickChampion: this.pickChampion,
+                    lockIn: this.lockIn,
                     sendMessage: this.sendMessage,
                     champion: this.champion,
                     message: this.message

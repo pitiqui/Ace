@@ -50,7 +50,7 @@ Allows you to press the enter key to accept queue ready check.
 
 ## practice-tool-extra-bots v2.0.0 (disabled by default)
 
-Allows you to add extra bots to the pracitce tool lobby.
+Allows you to add extra bots to the practice tool lobby.
 
 ## appear-mobile v2.0.0 
 
@@ -63,3 +63,7 @@ Adds chat commands to messaging, prefixed by forward-slash.
 ## insta-lock v2.0.0 
 
 Picks the chosen champion automatically when it is your turn to pick and/or sends a message as soon as champion select loads.
+
+## champion-profile v1.2.0 
+
+Adds a dropdown for choosing the champion in the background in your profile.

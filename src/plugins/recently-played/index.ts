@@ -79,7 +79,6 @@ const plugin: PluginDescription = {
                         // Add champion icon url to data player object.
                         p.championIconUrl = "/lol-game-data/assets/v1/champion-icons/" + p.championId + ".png";
                     });
-                    this.queueRepaint();
                 });
 
                 return "";

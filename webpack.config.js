@@ -1,4 +1,5 @@
 var webpack = require("webpack");
+var failPlugin = require("webpack-fail-plugin");
 
 module.exports = {
     module: {
@@ -47,6 +48,7 @@ module.exports = {
             compress: {
                 warnings: false
             }
-        })
+        }),
+        failPlugin // This fails Travis build after errors are outputted
     ]
 };

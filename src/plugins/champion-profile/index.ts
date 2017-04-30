@@ -14,7 +14,7 @@ const plugin: PluginDescription = {
     version: "1.2.0",
     description: "Adds a dropdown for choosing the champion in the background in your profile.",
     builtinDependencies: {
-        "rcp-fe-lol-profiles": "0.0.306"
+        "rcp-fe-lol-profiles": "~0.0.306"
     },
     setup() {
         settings = this.getPlugin("settings").api;

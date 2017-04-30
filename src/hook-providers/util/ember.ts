@@ -27,6 +27,17 @@ export function wrap_ember(ace: Ace) {
                 if (Ember[HOOKED]) return Ember;
 
                 Ember[HOOKED] = true;
+                if (window.ACE_DEV) {
+                    Ember.run.backburner.DEBUG = true; // Enable in depth stack traces from backburner
+                }
+                wrap_method(Ember, "get", function(original, args) {
+                    let ret = original.call(this, ...args);
+                    if (Array.isArray(ret) && !(<any>ret).findBy) {
+                        ret = Ember.A(ret);
+                    }
+                    return ret;
+                });
+
                 emberHooks.forEach(emberHook => {
                     // Call each ember hook
                     emberHook.hookEmber(Ember);
