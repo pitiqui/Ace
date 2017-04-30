@@ -63,3 +63,7 @@ Adds chat commands to messaging, prefixed by forward-slash.
 ## insta-lock v2.0.0 
 
 Picks the chosen champion automatically when it is your turn to pick and/or sends a message as soon as champion select loads.
+
+## champion-profile v1.2.0 
+
+Adds a dropdown for choosing the champion in the background in your profile.
