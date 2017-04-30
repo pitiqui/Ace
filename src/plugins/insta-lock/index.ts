@@ -37,7 +37,7 @@ const plugin: PluginDescription = {
         function tryToPick(actionId: number, retries: number = 0): Promise<String> {
             return simple_promise_fetch(`/lol-champ-select/v1/session/actions/${actionId}`, "PATCH", {
                 championId: settings.get("instaLock.champion", ""),
-                completed: "true"
+                completed: settings.get("instaLock.lockIn", false)
             }).catch(err => {
                 if (retries >= 5) {
                     throw Error(`Retried 5 times: ${err}`);

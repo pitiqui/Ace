@@ -3,6 +3,10 @@
         <input type="checkbox" v-model="pickChampion">
         <label for="pickChampion">Enable champion pick</label>
     </lol-uikit-flat-checkbox>
+    <lol-uikit-flat-checkbox class="insta-lock-default">
+        <input type="checkbox" :disabled="!pickChampion" v-model="lockIn">
+        <label for="lockIn">Enable champion lock in</label>
+    </lol-uikit-flat-checkbox>
     <div class="insta-lock-settings">
         <div class="contents">
             <div class="centered" v-if="loading || errored">
@@ -25,7 +29,7 @@
         <input type="checkbox" v-model="sendMessage">
         <label for="pickChampion">Enable message send</label>
     </lol-uikit-flat-checkbox>
-    <lol-uikit-flat-input>
+    <lol-uikit-flat-input class="insta-lock-default">
         <input type="text" placeholder="Message text" :disabled="!sendMessage" v-model="message">
     </lol-uikit-flat-input>
 </div>
