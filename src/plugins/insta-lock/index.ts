@@ -65,7 +65,7 @@ const plugin: PluginDescription = {
                 } else if (data.uri.match(`\/lol-chat\/v1\/conversations\/.*\/messages\/.*`) && !lastConversation.messageSent) {
                     let match = data.uri.match(`\/lol-chat\/v1\/conversations\/(.*)\/messages\/.*`)
                     if (match && match[1] && match[1] === encodeURIComponent(lastConversation.id)) {
-                        tryToSend(lastConversation);
+                        setTimeout(tryToSend, 500, lastConversation);
                         lastConversation.messageSent = true;
                     }
                 }
